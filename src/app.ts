@@ -1,5 +1,6 @@
 /*global jQuery, Handlebars, Router */
 import { ToDo } from './model/interface';
+import { restApi } from './model/model';
 
 declare const Router: any;
 declare const Handlebars: any;
@@ -60,7 +61,17 @@ jQuery(function ($) {
 					this.render();
 				}.bind(this)
 			}).init('/all');
-		},
+
+            $('#test').on('click', (e) => {
+            	const title = $('#new-todo').value;
+                restApi.create({id: util.uuid(), title: title, completed: false});
+                // .then((response) => console.log(response));
+            })
+            $('#test2').on('click', (e) => {
+                restApi.getAll().then((response) => console.log(response));
+            })
+
+        },
 		bindEvents: function () {
 			$('#new-todo').on('keyup', this.create.bind(this));
 			$('#toggle-all').on('change', this.toggleAll.bind(this));
@@ -71,6 +82,7 @@ jQuery(function ($) {
 				.on('keyup', '.edit', this.editKeyup.bind(this))
 				.on('focusout', '.edit', this.update.bind(this))
 				.on('click', '.destroy', this.destroy.bind(this));
+
 		},
 		render: function () {
 			var todos = this.getFilteredTodos();
