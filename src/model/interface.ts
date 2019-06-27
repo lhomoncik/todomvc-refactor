@@ -4,7 +4,7 @@ export interface ToDo {
     completed: boolean
 }
 
-export interface StorageApi{
+export interface TodoStorage{
     getAll: () => Promise<ToDo[]>,
     create: (todo: ToDo) => Promise<void>,
     toggle: (todo: ToDo) => Promise<void>,

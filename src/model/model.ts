@@ -1,9 +1,9 @@
-import { StorageApi, ToDo } from './interface';
+import { ToDo, TodoStorage } from './interface';
 
 declare const jQuery: any;
 
 
-export const restApi: StorageApi = {
+export const restTodoStorage: TodoStorage = {
     getAll: () => {
         return jQuery.ajax({
             method: 'GET',
@@ -19,7 +19,11 @@ export const restApi: StorageApi = {
     },
     toggle: (todo: ToDo): Promise<void> => {
         todo.completed = todo.completed;
-        return this.edit(todo);
+        return jQuery.ajax({
+            method: 'PUT',
+            url: `http://localhost:3000/todos/${todo.id}`,
+            data: todo
+        });
     },
     edit: (todo: ToDo): Promise<void> => {
         return jQuery.ajax({
