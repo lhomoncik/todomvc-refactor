@@ -6,10 +6,10 @@ export interface ToDo {
 
 export interface StorageApi{
     getAll: () => Promise<ToDo[]>,
-    create: (ToDo) => Promise<void>,
-    toggle: (ToDo) => Promise<void>,
-    edit: (ToDo) => Promise<void>,
-    toggleAll: (Array) => Promise<void>,
-    destroyCompleted: (Array) => Promise<void>,
-    destroy: (ToDo) => Promise<void>
+    create: (todo: ToDo) => Promise<void>,
+    toggle: (todo: ToDo) => Promise<void>,
+    edit: (todo: ToDo) => Promise<void>,
+    toggleAll: (todos: Array<ToDo>) => Promise<void>,
+    destroyCompleted: (todos: Array<ToDo>) => Promise<void>,
+    destroy: (todo: ToDo) => Promise<void>
 }
