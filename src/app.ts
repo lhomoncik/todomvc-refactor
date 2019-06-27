@@ -1,6 +1,15 @@
 /*global jQuery, Handlebars, Router */
+import { ToDo } from './model/interface';
+
+declare const Router: any;
+declare const Handlebars: any;
+declare const jQuery: any;
+
 jQuery(function ($) {
 	'use strict';
+
+	const SYNC_LOCAL_STORAGE = true;
+	const SYNC_REST_API = false;
 
 	Handlebars.registerHelper('eq', function (a, b, options) {
 		return a === b ? options.fn(this) : options.inverse(this);
@@ -28,7 +37,7 @@ jQuery(function ($) {
 		pluralize: function (count, word) {
 			return count === 1 ? word : word + 's';
 		},
-		store: function (namespace, data) {
+		store: function (namespace, data?) {
 			if (arguments.length > 1) {
 				return localStorage.setItem(namespace, JSON.stringify(data));
 			} else {
@@ -144,7 +153,7 @@ jQuery(function ($) {
 				id: util.uuid(),
 				title: val,
 				completed: false
-			});
+			} as ToDo);
 
 			$input.val('');
 
