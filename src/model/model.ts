@@ -11,7 +11,7 @@ export const restApi: StorageApi = {
         });
     },
     create: (todo: ToDo) => {
-        jQuery.ajax({
+        return jQuery.ajax({
             method: 'POST',
             url: 'http://localhost:3000/todos',
             data: todo
@@ -19,18 +19,19 @@ export const restApi: StorageApi = {
     },
     toggle: (todo: ToDo) => {
         todo.completed = todo.completed;
-        this.edit(todo);
+        return this.edit(todo);
     },
     edit: (todo: ToDo) => {
-        jQuery.ajax({
+        return jQuery.ajax({
             method: 'PUT',
             url: `http://localhost:3000/todos/${todo.id}`,
             data: todo
         });
     },
     toggleAll: (todos: ToDo[]) => {
-        todos.map((todo) => todo.completed = !todo.completed);
-        todos.forEach((todo) => this.edit(todo));
+        const todosList = todos.map((todo) => todo.completed = !todo.completed);
+        const todos2: Promise<Array> = todosList.map((todos) => this.edit(todos));
+        return Promise.all(todos2);
     },
     destroyCompleted: (todos: ToDo[]) => {
         todos.forEach((todo) => {
@@ -40,7 +41,7 @@ export const restApi: StorageApi = {
         });
     },
     destroy: (todo: ToDo) => {
-        jQuery.ajax({
+        return jQuery.ajax({
             method: 'DELETE',
             url: `http://localhost:3000/todos/${todo.id}`,
             data: todo
