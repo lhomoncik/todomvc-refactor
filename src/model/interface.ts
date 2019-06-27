@@ -5,6 +5,7 @@ export interface ToDo {
 }
 
 export interface StorageApi{
+    getAll: () => ToDo[],
     create: (ToDo) => void,
     toggle: (ToDo) => void,
     edit: (ToDo) => void,
